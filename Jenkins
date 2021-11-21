@@ -11,6 +11,7 @@ git branch: 'development', credentialsId: '8dd09fa9-32af-415f-891f-19095845f350'
     {
       sh "${mavenHome}/bin/mvn clean package"  
     }
+    /*
     stage ('generate sonar report')
     {
         sh "${mavenHome}/bin/mvn sonar:sonar"
@@ -39,5 +40,5 @@ sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13
 
 
 
-
+*/
 }
