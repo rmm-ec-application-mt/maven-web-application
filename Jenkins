@@ -26,11 +26,7 @@ sshagent(['8dae6b8f-fd4d-47af-a2f3-f494b95a352b']) {
 sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.234.21.183:/opt/apache-tomcat-9.0.55/webapps"
 
 }
-    }
-    stage('sendemailnotification')
-    {
-       mail bcc: '', body: 'build over..', cc: 'sasirmm6@gmail.com', from: '', replyTo: '', subject: 'build is sucess', to: 'sasirmm6@gmail.com' 
-    }
+    
     
 
 
