@@ -15,7 +15,7 @@ node
   {
      sh "${mavenHome}/bin/mvn sonar:sonar" 
   }
-  /*
+  
   stage('store artifacts ')
   {
       sh "${mavenHome}/bin/mvn deploy"
@@ -28,5 +28,5 @@ node
     sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.233.51.70:/opt/apache-tomcat-9.0.55/webapps"
  }
   }
-*/
+
 }
