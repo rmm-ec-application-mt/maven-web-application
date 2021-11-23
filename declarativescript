@@ -1,0 +1,77 @@
+pipeline
+{
+    agent any
+    
+    tools
+    {
+        maven 'maven3.8.3'
+    }
+    triggers
+    {
+        pollSCM('* * * * *')
+    }
+    
+    options
+    {
+        timestamps()
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '5', daysToKeepStr: '', numToKeepStr: '5'))
+    }
+    
+    
+    stages
+    {
+        stage('checkout code')
+        {
+            steps
+            {
+                git branch: 'development', credentialsId: '8dd09fa9-32af-415f-891f-19095845f350', url: 'https://github.com/sasirmm6/maven-web-application.git'
+            }
+        }
+    
+        stage('build')
+        {
+            steps
+            {
+                sh "mvn clean package"
+            }
+        }
+        
+        stage('execute sonarqube report')
+        {
+            steps
+            {
+                sh "mvn sonar:sonar"
+            }
+        }
+        
+        stage('store artifacts')
+        {
+            steps
+            {
+                sh "mvn deploy"
+            }
+        }
+        
+    
+        stage('deploy application')
+        {
+            steps
+            {
+               sshagent(['8dae6b8f-fd4d-47af-a2f3-f494b95a352b']) {
+               sh "scp -o  StrictHostKeyChecking=no target/maven-web-application.war ec2-user@3.110.122.35:/opt/apache-tomcat-9.0.55/webapps"
+
+ 
+} 
+            }
+        }
+        
+    
+    
+   
+        
+        
+    }//stage
+    
+     
+    
+    }//pipeline
